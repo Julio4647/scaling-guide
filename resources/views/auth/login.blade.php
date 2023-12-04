@@ -38,8 +38,11 @@
                                 ¿Olvidaste tu contraseña?
                             </a>
                         @endif
-                        <a href="{{ route('register') }}" class="bg-purple-500 text-white py-2 px-4 rounded mb-4">registarte</a>
-
+                    </div>
+                    <div class="flex items-center">
+                        <a class="underline text-sm text-purple-900 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-center" href="{{ route('register') }}">
+                            {{ __('Registrate') }}
+                        </a>
                     </div>
                 </form>
             </div>
