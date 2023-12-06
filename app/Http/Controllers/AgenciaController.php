@@ -16,15 +16,23 @@ class AgenciaController extends Controller
     {
         return view('auth.login');
     }
+
     public function loginAction(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('agencias');
+            return redirect()->intended('/');
         }
 
         return redirect('login')->withErrors('email', 'Error de autenticación. Verifica tus credenciales.');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect('/');
     }
 
 

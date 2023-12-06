@@ -14,13 +14,11 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/agencias', [AgenciaController::class, 'index'])->name('agencias.index');
+
+Route::get('/', [AgenciaController::class, 'index'])->name('agencias.index');
 Route::get('/agencias/create', [AgenciaController::class, 'create'])->name('agencias.create');
-Route::post('/agencias', [AgenciaController::class, 'store'])->name('agencias.store');
+Route::post('/', [AgenciaController::class, 'store'])->name('agencias.store');
 Route::get('/agencias/{agencia}/edit', [AgenciaController::class, 'edit'])->name('agencias.edit');
 Route::put('/agencias/{agencia}', [AgenciaController::class, 'update'])->name('agencias.update');
 Route::delete('/agencias/{agencia}', [AgenciaController::class, 'destroy'])->name('agencias.destroy');
@@ -28,6 +26,8 @@ Route::delete('/agencias/{agencia}', [AgenciaController::class, 'destroy'])->nam
 
 Route::get('/login', [AgenciaController::class, 'login'])->name('login');
 Route::post('/login', [AgenciaController::class, 'loginAction']);
+
+Route::post('/logout', [AgenciaController::class, 'logout'])->name('logout');
 
 
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
