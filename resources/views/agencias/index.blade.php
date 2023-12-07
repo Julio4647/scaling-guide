@@ -8,9 +8,13 @@
         <h1 class="text-2xl font-bold mb-4">Lista de Agencias</h1>
         @role('admin')
             <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva Agencia</a>
-        @else
+        @elserole('community')
         <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva Agencia</a>
         @endrole
+        <div class="mb-4" style="margin-top: 20px">
+            <label for="search" class="sr-only">Buscar:</label>
+            <input type="text" id="search" placeholder="Buscar por nombre o código" class="p-2 border border-gray-300 rounded">
+        </div>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-300" style="margin-top: 20px">
                 <thead class="bg-gray-200">
@@ -33,7 +37,7 @@
                         <!-- Agregar más encabezados según tus campos -->
                         @role('admin')
                             <th class="py-2 px-8 border-b">Acciones</th>
-                        @else
+                        @elserole('community')
                             <th class="py-2 px-8 border-b">Acciones</th>
                         @endrole
                     </tr>
@@ -67,7 +71,7 @@
                                         <button type="submit" class="text-red-500 ml-2">Eliminar</button>
                                     </form>
                                 </td>
-                            @else
+                            @elserole('community')
                                 <td class="py-2 px-8 border-b">
                                     <a href="{{ route('agencias.edit', $agencia->id) }}" class="text-blue-500">Editar</a>
 
@@ -79,4 +83,16 @@
             </table>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#search').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 @endsection

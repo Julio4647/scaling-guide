@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Auth;
 class AgenciaController extends Controller
 {
 
+    public function error403()
+    {
+        return view('error.403');
+    }
 
     public function login()
     {

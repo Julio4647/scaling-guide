@@ -27,6 +27,11 @@
                     @csrf
                     <button type="submit" class="bg-pink-500 text-white py-2 px-3 rounded mb-1">Cerrar Sesión</button>
                 </form>
+                @elserole('community')
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="bg-pink-500 text-white py-2 px-3 rounded mb-1">Cerrar Sesión</button>
+                </form>
                 @else
                 <a href="{{ route('login') }}" class="bg-pink-500 text-white py-2 px-3 rounded mb-1">Iniciar Seción</a>
                 @endrole
