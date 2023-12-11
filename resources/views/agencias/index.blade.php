@@ -11,26 +11,44 @@
             @elserole('community')
             <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva Agencia</a>
         @endrole
-        <div class="mb-4 py-4">
-            <div class="relative inline-block text-left">
-                <button id="statusFilterBtn" type="button" class="bg-red-500 text-white py-2 px-4 rounded">
-                    Filtrar por Status
-                </button>
-                <div id="statusDropdown" class="hidden absolute z-50 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
-                    <label class="block w-full py-2 px-4 text-sm">
-                        <input type="checkbox" class="status-checkbox" data-filter="activa"> Activa
-                    </label>
-                    <label class="block w-full py-2 px-4 text-sm">
-                        <input type="checkbox" class="status-checkbox" data-filter="inactiva"> Inactiva
-                    </label>
-                    <label class="block w-full py-2 px-4 text-sm">
-                        <input type="checkbox" class="status-checkbox" data-filter="pendiente"> Pendiente
-                    </label>
-                    <label class="block w-full py-2 px-4 text-sm">
-                        <input type="checkbox" class="status-checkbox" data-filter="cancelado"> Cancelado
-                    </label>
+        @php
+            $total = $agencias->count()
+        @endphp
+
+        <div class="mb-4 grid grid-cols-2 gap-4">
+            <div>
+                <div class="relative inline-block text-left">
+                    <button id="statusFilterBtn" type="button" class="bg-red-500 text-white py-2 px-4 rounded">
+                        Filtrar por Status
+                    </button>
+                    <div id="statusDropdown" class="hidden absolute z-50 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
+                        <label class="block w-full py-2 px-4 text-sm">
+                            <input type="checkbox" class="status-checkbox" data-filter="activa"> Activa
+                        </label>
+                        <label class="block w-full py-2 px-4 text-sm">
+                            <input type="checkbox" class="status-checkbox" data-filter="inactiva"> Inactiva
+                        </label>
+                        <label class="block w-full py-2 px-4 text-sm">
+                            <input type="checkbox" class="status-checkbox" data-filter="pendiente"> Pendiente
+                        </label>
+                        <label class="block w-full py-2 px-4 text-sm">
+                            <input type="checkbox" class="status-checkbox" data-filter="cancelado"> Cancelado
+                        </label>
+                    </div>
                 </div>
             </div>
+            <div>
+                <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+                    <div class="px-4 py-2">
+                      <div class="font-bold text-xl mb-2 text-center">Total Agencias</div>
+                      <p class="text-gray-700 text-base text-center">
+                        {{$total}}
+                      </p>
+                    </div>
+
+                  </div>
+            </div>
+
         </div>
 
 
