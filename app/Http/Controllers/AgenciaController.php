@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Agencia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AgenciaController extends Controller
 {
@@ -42,8 +43,12 @@ class AgenciaController extends Controller
 
     public function index()
     {
+        $conteoPorAgencia = Agencia::select('agency', DB::raw('count(*) as total'))
+    ->groupBy('agency')
+    ->get();
+
         $agencias = Agencia::all();
-        return view('agencias.index', compact('agencias'));
+        return view('agencias.index', compact('agencias','conteoPorAgencia'));
     }
 
     //spanish for visual

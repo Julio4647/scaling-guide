@@ -6,22 +6,31 @@
     @include('layouts.navbar')
     <div class="container mx-auto mt-8">
         <h1 class="text-2xl font-bold mb-4">Lista de Agencias</h1>
-        @role('admin')
-            <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva Agencia</a>
-            @elserole('community')
-            <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva Agencia</a>
-        @endrole
+
         @php
-            $total = $agencias->count()
+            $total = $agencias->count();
         @endphp
 
-        <div class="mb-4 grid grid-cols-2 gap-4">
+        <div class="mb-6 grid grid-cols-2 gap-4">
+            <div>
+                @role('admin')
+                    <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva
+                        Agencia</a>
+                    @elserole('community')
+                    <a href="{{ route('agencias.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-4">Crear Nueva
+                        Agencia</a>
+                @endrole
+            </div>
+            <div>
+
+            </div>
             <div>
                 <div class="relative inline-block text-left">
                     <button id="statusFilterBtn" type="button" class="bg-red-500 text-white py-2 px-4 rounded">
                         Filtrar por Status
                     </button>
-                    <div id="statusDropdown" class="hidden absolute z-50 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
+                    <div id="statusDropdown"
+                        class="hidden absolute z-50 mt-2 bg-white border border-gray-300 rounded-md shadow-md">
                         <label class="block w-full py-2 px-4 text-sm">
                             <input type="checkbox" class="status-checkbox" data-filter="activa"> Activa
                         </label>
@@ -40,17 +49,16 @@
             <div>
                 <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
                     <div class="px-4 py-2">
-                      <div class="font-bold text-xl mb-2 text-center">Total Agencias</div>
-                      <p class="text-gray-700 text-base text-center">
-                        {{$total}}
-                      </p>
+                        <div class="font-bold text-xl mb-2 text-center">Total Agencias</div>
+                        <p class="text-gray-700 text-base text-center">
+                            {{ $total }}
+                        </p>
                     </div>
 
-                  </div>
+                </div>
             </div>
 
         </div>
-
 
         <div class="mb-4" style="margin-top: 20px">
             <label for="search" class="sr-only">Buscar:</label>
@@ -137,57 +145,77 @@
                 </tbody>
             </table>
         </div>
+        <div class="overflow-x-auto" style="margin-top: 20px">
+            <h1 class="text-2xl font-bold mb-4">Agencys</h1>
+            <table class="min-w-full bg-white border border-gray-300 second-table" style="margin-top: 20px">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="py-2 px-8 border-b">Agency</th>
+                        <th class="py-2 px-8 border-b">Total Clientes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($conteoPorAgencia as $agencia)
+                        <tr>
+                            <td class="py-2 px-8 border-b text-center">{{ $agencia->agency }}</td>
+                            <td class="py-2 px-8 border-b text-center">{{ $agencia->total }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Función para manejar el clic en el botón de filtro
-            $('#statusFilterBtn').on('click', function () {
-                $('#statusDropdown').toggleClass('hidden');
-            });
+    <!-- ... (tu código existente) ... -->
 
-            // Función para manejar el cambio en los checkboxes
-            $('.status-checkbox').on('change', function () {
-                // Obtener los estados seleccionados
-                var selectedStatuses = $('.status-checkbox:checked').map(function () {
-                    return $(this).data('filter');
-                }).get();
-
-                // Filtrar las filas de la tabla según los estados seleccionados
-                if (selectedStatuses.length > 0) {
-                    $('tbody tr').hide().filter(function () {
-                        var status = $(this).find('[data-status]').data('status');
-                        return selectedStatuses.includes(status);
-                    }).show();
-                } else {
-                    // Mostrar todas las filas si no hay estados seleccionados
-                    $('tbody tr').show();
-                }
-            });
-
-            // Función para manejar la búsqueda en tiempo real
-            $('#search').on('keyup', function () {
-                var value = $(this).val().toLowerCase();
-                $('tbody tr').filter(function () {
-                    var rowText = $(this).text().toLowerCase();
-                    var status = $(this).find('[data-status]').data('status');
-
-                    // Mostrar la fila si el valor de búsqueda está presente en cualquier parte de la fila
-                    // o si el valor de búsqueda coincide con el valor del atributo data-status
-                    $(this).toggle(rowText.indexOf(value) > -1 || status.indexOf(value) > -1);
-                });
-
-                // Restaurar los checkboxes y ocultar el dropdown después de la búsqueda
-                if (value === '') {
-                    $('.status-checkbox').prop('checked', false);
-                    $('#statusDropdown').addClass('hidden');
-                }
-            });
+<script>
+    $(document).ready(function() {
+        // Función para manejar el clic en el botón de filtro
+        $('#statusFilterBtn').on('click', function() {
+            $('#statusDropdown').toggleClass('hidden');
         });
-    </script>
 
+        // Función para manejar el cambio en los checkboxes
+        $('.status-checkbox').on('change', function() {
+            // Obtener los estados seleccionados
+            var selectedStatuses = $('.status-checkbox:checked').map(function() {
+                return $(this).data('filter');
+            }).get();
 
+            // Filtrar las filas de la primera tabla según los estados seleccionados
+            if (selectedStatuses.length > 0) {
+                $('table:not(.second-table) tbody tr').hide().filter(function() {
+                    var status = $(this).find('[data-status]').data('status');
+                    return selectedStatuses.includes(status);
+                }).show();
+            } else {
+                // Mostrar todas las filas si no hay estados seleccionados
+                $('table:not(.second-table) tbody tr').show();
+            }
+        });
 
+        // Función para manejar la búsqueda en tiempo real
+        $('#search').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('table:not(.second-table) tbody tr').filter(function() {
+                var rowText = $(this).text().toLowerCase();
+                var status = $(this).find('[data-status]').data('status');
+
+                // Mostrar la fila si el valor de búsqueda está presente en cualquier parte de la fila
+                // o si el valor de búsqueda coincide con el valor del atributo data-status
+                $(this).toggle(rowText.indexOf(value) > -1 || status.indexOf(value) > -1);
+            });
+
+            // Restaurar los checkboxes y ocultar el dropdown después de la búsqueda
+            if (value === '') {
+                $('.status-checkbox').prop('checked', false);
+                $('#statusDropdown').addClass('hidden');
+            }
+        });
+    });
+</script>
+
+<!-- ... (tu código existente) ... -->
 
 @endsection
