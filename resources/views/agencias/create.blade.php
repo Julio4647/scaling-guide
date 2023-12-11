@@ -25,6 +25,17 @@
                 </div>
 
                 <div>
+                    <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status</label>
+                    <select name="status" required class="border border-gray-300 p-2 w-full">
+                        <option value="activa">Activa</option>
+                        <option value="inactiva">Inactiva</option>
+                        <option value="pendiente">Pendiente de Pago</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                </div>
+
+
+                <div>
                     <label for="ciudad" class="block text-gray-700 text-sm font-bold mb-2">Ciudad:</label>
                     <input type="text" name="ciudad" required class="border border-gray-300 p-2 w-full">
                 </div>

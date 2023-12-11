@@ -25,6 +25,7 @@ class Agencia extends Model
         'tipo_pago',
         'vendedor',
         'porcentaje_descuento',
+        'status',
         // ... otros campos ...
     ];
 }

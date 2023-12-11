@@ -30,6 +30,7 @@ class CreateAgenciasTable extends Migration
             $table->string('tipo_pago');
             $table->string('vendedor');
             $table->string('porcentaje_descuento');
+            $table->string('status');
             // ... otros campos ...
             $table->timestamps();
         });
