@@ -20,7 +20,6 @@ class CreateAgenciasTable extends Migration
             $table->string('tipo_agencia');
             $table->string('ciudad');
             $table->string('estado');
-            $table->string('pais');
             $table->string('nombre_cliente');
             $table->string('email');
             $table->string('agency');
@@ -28,6 +27,8 @@ class CreateAgenciasTable extends Migration
             $table->string('modalidad');
             $table->string('monto_pago');
             $table->string('tipo_pago');
+            $table->string('moneda');
+            $table->string('pais');
             $table->string('vendedor');
             $table->string('porcentaje_descuento');
             $table->string('status');

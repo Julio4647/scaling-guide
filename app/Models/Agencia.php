@@ -24,6 +24,7 @@ class Agencia extends Model
         'monto_pago',
         'tipo_pago',
         'vendedor',
+        'moneda',
         'porcentaje_descuento',
         'status',
         // ... otros campos ...
