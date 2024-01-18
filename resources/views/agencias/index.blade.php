@@ -33,7 +33,7 @@
                     <div class="px-4 py-2">
                         <div class="font-bold text-xl mb-2 text-center">Total Agencias</div>
                         <p class="text-gray-700 text-base text-center">
-                            {{ $total }}
+                        <div id="resultado-filas"></div>
                         </p>
                     </div>
 
@@ -488,7 +488,7 @@
                 console.log('Selected Paises:', selectedPaises);
 
                 // Filtrar las filas de la primera tabla según los estados, tipos de agencia, agencias, modalidades, monedas, tipos de pago y países seleccionados
-                $('table:not(.second-table) tbody tr').hide().filter(function() {
+                var filasFiltradas = $('table:not(.second-table) tbody tr').hide().filter(function() {
                     var status = $(this).find('[data-status]').data('status');
                     var tipoAgencia = $(this).find('[data-column="tipo_agencia"]').text().toLowerCase();
                     var agency = $(this).find('[data-column="agency"]').text().toLowerCase();
@@ -497,15 +497,7 @@
                     var tipoPago = $(this).find('[data-column="tipo_pago"]').text().toLowerCase();
                     var pais = $(this).find('[data-column="pais"]').text().trim();
 
-                    console.log('Row Status:', status);
-                    console.log('Row Tipo Agencia:', tipoAgencia);
-                    console.log('Row Agency:', agency);
-                    console.log('Row Modalidad:', modalidad);
-                    console.log('Row Moneda:', moneda);
-                    console.log('Row Tipo Pago:', tipoPago);
-                    console.log('Row Pais:', pais);
-
-                    return (selectedStatuses.length === 0 || selectedStatuses.includes(status)) &&
+                    var isVisible = (selectedStatuses.length === 0 || selectedStatuses.includes(status)) &&
                         (selectedTipoAgencias.length === 0 || selectedTipoAgencias.includes(tipoAgencia)) &&
                         (selectedAgencies.length === 0 || selectedAgencies.includes(agency)) &&
                         (selectedModalidades.length === 0 || selectedModalidades.includes(modalidad)) &&
@@ -513,21 +505,18 @@
                         (selectedTiposPago.length === 0 || selectedTiposPago.includes(tipoPago)) &&
                         (selectedPaises.length === 0 || selectedPaises.includes(pais)) &&
                         ($(this).text().toLowerCase().indexOf($('#search').val().toLowerCase()) > -1);
+
+                    return isVisible;
                 }).show();
 
+                // Contar la cantidad de filas mostradas
+                var cantidadFilasMostradas = filasFiltradas.length;
 
-                // Contar y mostrar opciones seleccionadas para cada filtro
-                var countStatus = contarOpcionesSeleccionadas('.status-checkbox');
-                var countTipoAgencia = contarOpcionesSeleccionadas('.tipo-agencia-checkbox');
-                var countAgency = contarOpcionesSeleccionadas('.agency-checkbox');
-                var countModalidad = contarOpcionesSeleccionadas('.modalidad-checkbox');
-                var countPais = contarOpcionesSeleccionadas('.pais-checkbox');
+                // Mostrar la cantidad en un div con un h1
+                $('#resultado-filas').html('<h1>' + cantidadFilasMostradas + '</h1>');
 
-                $('#countStatus').text(countStatus);
-                $('#countTipoAgencia').text(countTipoAgencia);
-                $('#countAgency').text(countAgency);
-                $('#countModalidad').text(countModalidad);
-                $('#countPais').text(countPais);
+
+
             }
 
 
